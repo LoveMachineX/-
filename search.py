@@ -1,6 +1,6 @@
-# search.py
 from chromadb import HttpClient
 from sentence_transformers import SentenceTransformer
+from export_utils import SearchExporter
 
 embed_model = SentenceTransformer("models/bge-base-zh")
 
@@ -81,5 +81,11 @@ if __name__ == "__main__":
     results = search_products("方便面", max_results=5)
     print_results(results)
     
+    # 使用新导出功能
+    SearchExporter.export_to_excel(results, "饮料商品.xlsx")
+    
+    # 批量导出示例
+    queries = [("矿泉水", 10), ("零食", 15), ("日用品", 8)]
+    SearchExporter.batch_export(search_products, queries)
 
     
